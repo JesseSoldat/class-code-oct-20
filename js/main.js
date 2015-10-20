@@ -11,7 +11,7 @@ let MenuItem = function (params) {
   this.item = params.item;
   this.price = params.price;
   this.info = params.info;
-  this.quantity = 100;
+  this.quantity = (params.favorite === 1) ? 1000 : 100;
 
   this.soldOne = function () {
     return this.quantity = this.quantity - 1;
@@ -42,12 +42,12 @@ menuRequest.then( function (response) {
 
 
 // Function to sell an Item
-window.sellItem = function (specId) {
+let sellItem = function (specId) {
 
   // Take the id param
   // Find the spec item in the array
   let specItem = _.findWhere(menu, { id: specId });
-    
+
   // Run that spec item's `soldOne` method
   specItem.soldOne();
 
@@ -55,3 +55,9 @@ window.sellItem = function (specId) {
   console.log(specItem.item + ' has sold one, and there is ' + specItem.quantity + ' left.');
 
 };
+
+// User action to sell an item.
+$('#sellItemBtn').on('click', function () {
+  let ii = $('#itemId').val();
+  sellItem(Number(ii));
+});

@@ -24,7 +24,7 @@ var MenuItem = function MenuItem(params) {
   this.item = params.item;
   this.price = params.price;
   this.info = params.info;
-  this.quantity = 100;
+  this.quantity = params.favorite === 1 ? 1000 : 100;
 
   this.soldOne = function () {
     return this.quantity = this.quantity - 1;
@@ -51,7 +51,7 @@ menuRequest.then(function (response) {
 });
 
 // Function to sell an Item
-window.sellItem = function (specId) {
+var sellItem = function sellItem(specId) {
 
   // Take the id param
   // Find the spec item in the array
@@ -63,6 +63,12 @@ window.sellItem = function (specId) {
   // log out the name + remaining quantity
   console.log(specItem.item + ' has sold one, and there is ' + specItem.quantity + ' left.');
 };
+
+// User action to sell an item.
+(0, _jquery2['default'])('#sellItemBtn').on('click', function () {
+  var ii = (0, _jquery2['default'])('#itemId').val();
+  sellItem(Number(ii));
+});
 
 },{"jquery":2,"moment":3,"underscore":4}],2:[function(require,module,exports){
 /*!
